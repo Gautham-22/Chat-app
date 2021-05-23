@@ -1,0 +1,5 @@
+#node modules installed
+node_modules
+
+#env file 
+.env

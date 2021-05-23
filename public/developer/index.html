@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="Ie-edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Personal Portfolio</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@500&family=Kumbh+Sans:wght@700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" 
+        integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" 
+        crossorigin="anonymous" />
+        <link rel="stylesheet" href="./developer.css">
+    </head>
+    <body>
+        <section id="main">
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <a href="#" class="logo navbar-brand">Portfolio</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto menu">
+                      <li class="nav-item">
+                        <a href="#main" class="nav-link active">Home</a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="#about" class="nav-link">About</a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="#contact-form" class="nav-link">Contact</a>
+                      </li>
+                    </ul>
+                  </div>
+            </nav>
+            <div class="name">
+                <p>Hello,</p>
+                <h1>I'm <div style="display: inline;" id="name">Gautham Kumar</div></h1>
+                <p class="details">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+                    Eum officia corporis nam numquam mollitia aut voluptate necessitatibus nostrum aperiam.
+                </p>
+                <div class="social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-medium"></i></a>
+                </div>
+            </div>
+            <div class="image">
+                <img src="../img/image.jpeg" class="profile" alt="">
+            </div>
+        </section>
+        <section id="about">
+            <div class="about-text">
+                <h1>About Us</h1>
+                <h2>Fullstack Developer</h2>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio ut consequatur sed vitae error porro quis! Architecto,
+                odio eius quod exercitationem numquam in temporibus officiis mollitia eos aperiam rem voluptas.
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorem consectetur voluptate excepturi,
+                 quasi voluptatibus exercitationem ab sapiente!</p>
+                <button class="about-btn">More Details</button>
+            </div>
+            <div class="about-model">
+                <img src="../img/image.jpeg" alt="model/">
+            </div>
+        </section>
+        <section id="contact-btn">
+            <h1>If You Have Any Project In Your Mind ?</h1>
+            <a href="#contact-form">Contact Me</a>
+        </section>
+        <section id="contact-form">
+            <form action="mailto:gautham22poy@gmail.com" method="post" enctype="text/plain">
+                <div class="contact-left">
+                    <h1 class="c-l-heading">Write Us</h1>
+                    <div class="f-name">
+                        <p>Name</p>
+                        <input type="text" name="name" placeholder="Full Name">
+                    </div>
+                    <div class="f-email">
+                        <p>Email</p>
+                        <input type="email" name="email" placeholder="Example@hmail.com">
+                    </div>
+                </div>
+                <div class="contact-right">
+                    <div class="message">
+                        <p>Message</p>
+                        <textarea name="message" cols="20" rows="5" placeholder="Write message..."></textarea>
+                    </div>
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        </section>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="./developer.js"></script>
+    </body>
+</html>

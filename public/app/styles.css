@@ -1,0 +1,153 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+main {
+    width: 55%;
+    height: 80%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.content {
+    display: flex;
+    width: 100%;
+    height: 91%;
+    border: 0.5px solid rgb(235, 235, 235);
+}
+
+.active-users {
+    width: 43%;
+    background: rgb(247, 247, 247);
+}
+
+.heading {
+    width: 90%;
+    height: 7%;
+    margin: auto;
+    margin-top: 5px;
+    padding: 5px;
+    border-bottom: 0.5px solid rgb(153, 153, 153);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    color: rgb(87, 84, 84);
+    letter-spacing: 0.5px;
+}
+
+.users {
+    width: 100%;
+    height: 92%;
+    padding: 10px 20px;
+    overflow: auto;
+}
+
+.user {
+    margin: 5px 0px;
+    font-size: 13px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: #139c8c;
+}
+
+.text-input {
+    width: 100%;
+    height: 9%;
+}
+
+.new-message {
+    width: 88%;
+    height: 100%;
+    padding: 9px;
+    font-size: 15px;
+    border: none;
+    outline: none;
+    border-bottom: 0.5px solid #139c8c;
+}
+
+.enter {
+    width: 11%;
+    height: 100%;
+    color: white;
+    font-size: 16px;
+    background: #139c8c;
+    border: none;
+    float: right;
+}
+
+.enter:hover, #logout:hover{
+    cursor: pointer;
+    background: #128f80;
+    transition: 0.3s ease-in;
+}
+
+.chat-history {
+    width: 67%;
+    height: 100%;
+    padding: 10px;
+    letter-spacing: 0.75px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.sent-message, .received-message {
+    overflow: auto;
+    width: 275px;
+    min-height: 27px;
+    padding: 6px;
+    margin-top: 15px;
+    font-size: 13px;
+    word-wrap: break-word;
+    position: relative;
+}
+
+.sent-message {
+    background: #128f80;
+    color: white;
+    float: right;
+}
+
+.received-message {
+    background: rgb(238, 238, 238);
+    float: left;
+}
+
+.sent-message::after, .received-message::after{
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.messager-name {
+    font-weight: bold;
+    margin: 2px 0px 3px;
+    font-size: 14px;
+}
+
+.time {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: smaller;
+    opacity: 0.8;
+}
+
+#logout {
+    width: 6.5%;
+    height: 5.5%;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    border: none;
+    color: white;
+    font-size: 16px;
+    background: #139c8c;
+}
