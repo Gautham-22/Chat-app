@@ -12,7 +12,7 @@ html, body {
 
 #form {
     width: 33%;
-    height: 65%;
+    height: 68%;
     padding: 35px;
     position: absolute;
     top: 50%;
@@ -30,11 +30,11 @@ html, body {
     color: white;
 }
 
-#form input[type="text"],#form input[type="password"]{
+#form input[type="text"],#form input[type="password"],#form input[type="file"]{
     display: block;
     text-align: center;
     border: 0;
-    margin: 20px auto;
+    margin: 15px auto;
     background: none;
     color: white;
     border: 2px solid #3498db;
@@ -45,13 +45,13 @@ html, body {
     transition: 0.25s;
 }
 
-#form input[type="text"]:focus,#form input[type="password"]:focus{
+#form input[type="text"]:focus,#form input[type="password"]:focus,#form input[type="file"]:focus{
     width: 250px;
     border: 2px solid #2ecc71;
     transition: 0.25s;
 }
 
-#form input[type="text"]::selection,#form input[type="password"]::selection {
+#form input[type="text"]::selection,#form input[type="password"]::selection,#form input[type="file"]::selection{
     background-color: #3498db ;
     color: black;
 }
@@ -102,9 +102,22 @@ li a:hover:not(.active) {
     background-color: #21c465;
 }
 
-p {
+p{
     color: rgb(214, 214, 214);
     font-size: 16px;
+}
+
+.profile-pic::-webkit-file-upload-button {
+    visibility: hidden;
+}
+.profile-pic::before {
+    content: 'Choose Profile Pic';
+    padding: 5px 25px;
+    border: none;
+    outline: none;
+    --webkit-user-select: none;
+    cursor: pointer;
+    opacity: 0.5;
 }
 
 .alert-custom {

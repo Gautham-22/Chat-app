@@ -5,6 +5,9 @@ const MongoConnection = require("connect-mongo");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcryptjs");
+let multer = require("multer");
+const fs = require("fs");
+const path = require("path");
 
 const app = express();
 
@@ -17,6 +20,18 @@ app.use(express.json());
 
 // For using EJS
 app.set("view engine","ejs");
+
+// For image input - multer middleware
+let storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+});
+ 
+let upload = multer({ storage: storage });
 
 
 // DB Connection
@@ -41,6 +56,10 @@ const userSchema = new mongoose.Schema({
     password : {
         type : String,
         unique : true
+    },
+    profile : {
+        data : Buffer,
+        contentType : String
     }
 });
 const User = mongoose.model("user",userSchema);
@@ -117,18 +136,24 @@ app.get("/logout",(req,res) => {
 
 app.get("/personalChat",(req,res) => {
     if(req.isAuthenticated()) {
-        res.render("app");
+        console.log(req.user);
+        res.render("app",{image : req.user.profile,username : req.user.username});
     }else {
         req.session.failureMsg = "Login into your account."
         res.redirect("/login");
     }
 });
 
-app.post("/register",(req,res) => {
+app.post("/register",upload.single("image"),(req,res) => {
+    console.log(req.file.filename);
     let {username,password} = req.body;
     let newUser = new User({
         username : username,
-        password : genPassword(password)
+        password : genPassword(password),
+        profile : {
+            data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
+            contentType: 'image/png'
+        }
     });
     newUser.save(function() {
         console.log("Successfully added a new user.");
@@ -145,10 +170,15 @@ const server = app.listen(3000,() => {
 // Socket.io 
 const io = require("socket.io")(server);
 
-io.on("connection",(socket) => {
-    console.log("Made socket connection");
-})
+function createSocketConnection() {
+    io.on("connection",(socket) => {
+        console.log("Made socket connection");
+    })
+}
 
+
+
+// For hashing
 function genPassword(password) {
     let salt = bcrypt.genSaltSync(10);
     let hash = bcrypt.hashSync(password,salt);

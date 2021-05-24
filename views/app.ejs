@@ -18,7 +18,12 @@
         <a href="/logout"><button id="logout"><i class="fas fa-arrow-circle-left"> </i>  Logout</button></a>
         <main>
             <div class="content">
-                <div class="active-users">
+                <div class="user-tab">
+                    <div class="account">
+                        <img src="data:image/<%= image.contentType %>;base64,
+                        <%= image.data.toString('base64') %>" class="profile">
+                        <h3><%= username %></h3>
+                    </div>
                     <h3 class="heading">
                         Active Users
                     </h3>
