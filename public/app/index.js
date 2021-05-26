@@ -23,7 +23,6 @@ if(socket != undefined) {
             targetUser = event.target.textContent;
 
             targetUser = targetUser.trim();
-            console.log("Target user : ",targetUser);
     
             socket.emit("get chat",{currentUser,targetUser});
             

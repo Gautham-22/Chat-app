@@ -37,7 +37,9 @@ let upload = multer({ storage: storage });
 // DB Connection
 mongoose.connect(process.env.LOCAL_CONNECTION_STRING,{
     useNewUrlParser : true,
-    useUnifiedTopology : true
+    useUnifiedTopology : true,
+    useCreateIndex : true,
+    useFindAndModify : false
 })
 .then(() => {
     console.log("Database connection made to : ",process.env.LOCAL_CONNECTION_STRING);
@@ -141,29 +143,47 @@ app.get("/logout",(req,res) => {
 });
 
 app.get("/personalChat",(req,res) => {
+    let chattedUsernames = [], chattedUserprofiles = [], user;
     if(req.isAuthenticated()) {
-        let chattedUsers = [];
-        Chat.find({from : req.user.username},function(err,chats) {
-            if(chats) {
+        Chat.find({$or : [{from : req.user.username},{to : req.user.username}]},function(err,chats) {
+            if(err) {
+                console.log(err);
+                process.exit(1);
+            }
+            if(chats.length > 0) {
                 for(let i=0;i<chats.length;i++){
-                    User.findOne({username : chats[i].to},function(err,chattedUser) {
-                        chattedUsers.push(chattedUser);
-                        if(i == chats.length-1){
-                            callBack(res,{image : req.user.profile,username : req.user.username, chattedUsers : chattedUsers})
+                    user = chats[i].from == req.user.username ? chats[i].to : chats[i].from;
+                    User.findOne({username : user},function(err,chattedUser) {
+                        if(!chattedUsernames.includes(chattedUser.username)) {
+                            chattedUsernames.push(chattedUser.username);
+                            chattedUserprofiles.push(chattedUser.profile);
                         }
+                        if(i == chats.length - 1) {
+
+                            res.render("app",{
+                                image : req.user.profile,
+                                username : req.user.username,
+                                chattedUsernames : chattedUsernames,
+                                chattedUserprofiles : chattedUserprofiles
+                            });
+                        }   
                     })
                 }
+            }else {
+                res.render("app",{
+                    image : req.user.profile,
+                    username : req.user.username,
+                    chattedUsernames : chattedUsernames,  // empty array 
+                    chattedUserprofiles : chattedUserprofiles // empty array 
+                });
             }
         })
+
     }else {
         req.session.failureMsg = "Login into your account."
         res.redirect("/login");
     }
 });
-
-function callBack(res,data) {
-    return res.render("app",data);
-}
 
 app.post("/register",upload.single("image"),(req,res) => {
     let {username,password} = req.body;
@@ -210,7 +230,7 @@ io.on("connection",(socket) => {
         User.findOne({username:targetUser},function(err,user) {
             toUser = user;
             Chat.findOne({from : currentUser,to : targetUser},function(err,chat1) {
-                return Chat.findOne({from : targetUser,to : currentUser},function(err,chat2) {
+                Chat.findOne({from : targetUser,to : currentUser},function(err,chat2) {
                     if(!chat1 && !chat2) {
                         messages = [];
                     }else if(chat1 && !chat2) {
