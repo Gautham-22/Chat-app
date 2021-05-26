@@ -18,26 +18,42 @@
         <a href="/logout"><button id="logout"><i class="fas fa-arrow-circle-left"> </i>  Logout</button></a>
         <main>
             <div class="content">
-                <div class="user-tab">
+                <div class="account-tab">
                     <div class="account">
                         <img src="data:image/<%= image.contentType %>;base64,
-                        <%= image.data.toString('base64') %>" class="profile">
-                        <h3><%= username %></h3>
+                        <%= image.data.toString('base64') %>" class="my-profile">
+                        <p id="current-user"><%= username %></p>
                     </div>
+                    <div class="search-users">
+                        <input type="text" placeholder=" name" class="search-user" spellcheck="false" autocomplete="off">
+                        <a href="#" class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </a> 
+                    </div>
+                    <div class="result"></div>
+                </div>
+                <div class="user-tab">
                     <h3 class="heading">
                         Active Users
                     </h3>
-                    <div class="users">
-                        
+                    <div class="chatted-users">
+                        <% for(let i=0;i<chattedUsers.length;i++){ %>
+                            <div class="user"><p id="chat-username"><%= chattedUsers[i].username %></p></div>
+                        <% } %>
                     </div>
                 </div>
                 <div class="chat-history">
+                    <div class="chatting-user">
 
+                    </div>
+                    <div class="messages">
+
+                    </div>
                 </div>
             </div>
             <form class="text-input">
                 <input type="text" class="new-message" placeholder="type a message">
-                <input type="submit" value="Enter" class="enter">
+                <input type="button" value="Enter" class="enter">
             </form>
         </main>
         <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" 

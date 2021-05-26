@@ -65,6 +65,12 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model("user",userSchema);
 
 // For chats collection
+const chatSchema = new mongoose.Schema({
+    from : String,
+    to : String,
+    messages : Array
+});
+const Chat = mongoose.model("chat",chatSchema);
 
 
 // Session
@@ -136,16 +142,30 @@ app.get("/logout",(req,res) => {
 
 app.get("/personalChat",(req,res) => {
     if(req.isAuthenticated()) {
-        console.log(req.user);
-        res.render("app",{image : req.user.profile,username : req.user.username});
+        let chattedUsers = [];
+        Chat.find({from : req.user.username},function(err,chats) {
+            if(chats) {
+                for(let i=0;i<chats.length;i++){
+                    User.findOne({username : chats[i].to},function(err,chattedUser) {
+                        chattedUsers.push(chattedUser);
+                        if(i == chats.length-1){
+                            callBack(res,{image : req.user.profile,username : req.user.username, chattedUsers : chattedUsers})
+                        }
+                    })
+                }
+            }
+        })
     }else {
         req.session.failureMsg = "Login into your account."
         res.redirect("/login");
     }
 });
 
+function callBack(res,data) {
+    return res.render("app",data);
+}
+
 app.post("/register",upload.single("image"),(req,res) => {
-    console.log(req.file.filename);
     let {username,password} = req.body;
     let newUser = new User({
         username : username,
@@ -170,11 +190,85 @@ const server = app.listen(3000,() => {
 // Socket.io 
 const io = require("socket.io")(server);
 
-function createSocketConnection() {
-    io.on("connection",(socket) => {
-        console.log("Made socket connection");
-    })
-}
+
+io.on("connection",(socket) => {
+    console.log("Made socket connection");
+
+    socket.on("search",function(searchedUser) {
+        User.find({username:searchedUser},function(err,users) {
+            if(err) {
+                console.log(err);
+                return process.exit(1);
+            }
+            io.to(socket.id).emit("search-result",users);
+        })
+    });
+
+    socket.on("get chat",function({currentUser,targetUser}) {
+        let toUser;
+        let messages;
+        User.findOne({username:targetUser},function(err,user) {
+            toUser = user;
+            Chat.findOne({from : currentUser,to : targetUser},function(err,chat1) {
+                return Chat.findOne({from : targetUser,to : currentUser},function(err,chat2) {
+                    if(!chat1 && !chat2) {
+                        messages = [];
+                    }else if(chat1 && !chat2) {
+                        messages = chat1.messages;
+                    }else if(!chat1 && chat2) {
+                        messages = chat2.messages;
+                    }else {
+                        messages = chat1.messages;
+                        messages = messages.concat(chat2.messages);
+                        messages.sort(function(a,b) {  // sorting messages with respect to time
+                            let d1 = new Date(a.time);
+                            let d2 = new Date(b.time);
+                            return d1.getTime() - d2.getTime();
+                        });
+                    }
+                    return io.to(socket.id).emit("found chat",{toUser,messages});
+                });
+            });
+        });
+    });
+
+    socket.on("new message",function({currentUser,targetUser,newMessage}) {
+        let newMsg, messages;
+        Chat.findOne({from : currentUser,to : targetUser},function(err,chat) {
+            if(err) {
+                console.log(err);
+                return process.exit(1);
+            }
+            newMsg = {
+                owner : currentUser,
+                content : newMessage,
+                time : new Date().toLocaleString("en-us")
+            };
+            if(!chat) {
+                messages = [];
+                messages.push(newMsg);
+                let newChat = new Chat({
+                    from : currentUser,
+                    to : targetUser,
+                    messages : messages
+                });
+                newChat.save(function() {
+                    console.log("Started a new chat.");
+                });
+            }else {
+                messages = chat.messages;
+                messages.push(newMsg);
+                Chat.findOneAndUpdate({from : currentUser,to : targetUser},{messages : messages},{useFindAndModify : false},function(err,initialChat){
+                    if(err) {
+                        console.log(err);
+                        return process.exit(1);
+                    }
+                });
+            }
+            io.emit("new message",{from : currentUser,to : targetUser,msg : newMsg});
+        });
+    });
+})
 
 
 
