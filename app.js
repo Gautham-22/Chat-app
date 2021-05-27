@@ -213,9 +213,9 @@ const io = require("socket.io")(server);
 
 io.on("connection",(socket) => {
     console.log("Made socket connection");
-
-    let resultUsernames = [], resultUserprofiles = [];
+    
     socket.on("search",function(searchedUser) {
+        let resultUsernames = [], resultUserprofiles = [];
         User.find({username:searchedUser},function(err,users) {
             if(err) {
                 console.log(err);
@@ -278,8 +278,9 @@ io.on("connection",(socket) => {
                     to : targetUser,
                     messages : messages
                 });
-                newChat.save(function() {
+                return newChat.save(function() {  // since save is async, we are emitting only after saving newMsg in db
                     console.log("Started a new chat.");
+                    return io.emit("new message",{from : currentUser,to : targetUser,msg : newMsg});
                 });
             }else {
                 messages = chat.messages;
