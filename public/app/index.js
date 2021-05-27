@@ -39,14 +39,12 @@ if(socket != undefined) {
         }
     });
 
-    socket.on("search-result",function(foundUsers) {
+    socket.on("search-result",function({resultUsernames,resultUserprofiles}) {
         let users = "";
-        if(foundUsers.length) {
-            foundUsers.map(function(foundUser) {
-                users += `<button><div class="user">
-                    <p id="chat-username">${foundUser.username}</p>
-                </div></button>`;
-            });
+        if(resultUsernames.length) {
+            for(let i=0;i<resultUsernames.length;i++) {
+                users += `<button><div class="user"><p id="chat-username">${resultUsernames[i]}</p></div></button>`;
+            };
         }else {
             users = `<div class="alert alert-warning alert-dismissible fade show alert-custom" role="alert">
                 No such user found!
@@ -57,8 +55,8 @@ if(socket != undefined) {
         document.querySelector(".result").innerHTML = users;
     });
 
-    socket.on("found chat",function({toUser,messages}) {
-        let chatUser = `<p id="chat-username">${toUser.username}</p>`;
+    socket.on("found chat",function({toUsername,messages}) {
+        let chatUser = `<p id="chat-username">${toUsername}</p>`;
         let count = 0;
         document.querySelector(".chatting-user").innerHTML = chatUser;
 
@@ -66,7 +64,7 @@ if(socket != undefined) {
         if(document.querySelector(".chatted-users").hasChildNodes()) {
             let chattedUsers = document.querySelector(".chatted-users").childNodes;
             for (let i = 0; i < chattedUsers.length; i++) {
-                if(chattedUsers[i].textContent == toUser.username) {  // checking whether toUser is already in chatted users list
+                if(chattedUsers[i].textContent == toUsername) {  // checking whether toUser is already in chatted users list
                     count += 1;
                 }
               }

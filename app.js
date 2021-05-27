@@ -214,21 +214,27 @@ const io = require("socket.io")(server);
 io.on("connection",(socket) => {
     console.log("Made socket connection");
 
+    let resultUsernames = [], resultUserprofiles = [];
     socket.on("search",function(searchedUser) {
         User.find({username:searchedUser},function(err,users) {
             if(err) {
                 console.log(err);
                 return process.exit(1);
             }
-            io.to(socket.id).emit("search-result",users);
+            for(let i=0;i<users.length;i++) {
+                resultUsernames.push(users[i].username);
+                resultUserprofiles.push(users[i].profile);
+            }
+            io.to(socket.id).emit("search-result",{resultUsernames,resultUserprofiles});
         })
     });
 
     socket.on("get chat",function({currentUser,targetUser}) {
-        let toUser;
+        let toUser, toUsername;
         let messages;
         User.findOne({username:targetUser},function(err,user) {
-            toUser = user;
+            toUser = user; 
+            toUsername = user.username;
             Chat.findOne({from : currentUser,to : targetUser},function(err,chat1) {
                 Chat.findOne({from : targetUser,to : currentUser},function(err,chat2) {
                     if(!chat1 && !chat2) {
@@ -246,7 +252,7 @@ io.on("connection",(socket) => {
                             return d1.getTime() - d2.getTime();
                         });
                     }
-                    return io.to(socket.id).emit("found chat",{toUser,messages});
+                    return io.to(socket.id).emit("found chat",{toUsername,messages});
                 });
             });
         });
