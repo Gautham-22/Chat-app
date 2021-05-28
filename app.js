@@ -230,11 +230,12 @@ io.on("connection",(socket) => {
     });
 
     socket.on("get chat",function({currentUser,targetUser}) {
-        let toUser, toUsername;
+        let toUser, toUsername, toUserprofile;
         let messages;
         User.findOne({username:targetUser},function(err,user) {
             toUser = user; 
             toUsername = user.username;
+            toUserprofile = user.profile;
             Chat.findOne({from : currentUser,to : targetUser},function(err,chat1) {
                 Chat.findOne({from : targetUser,to : currentUser},function(err,chat2) {
                     if(!chat1 && !chat2) {
@@ -252,7 +253,7 @@ io.on("connection",(socket) => {
                             return d1.getTime() - d2.getTime();
                         });
                     }
-                    return io.to(socket.id).emit("found chat",{toUsername,messages});
+                    return io.to(socket.id).emit("found chat",{toUsername,toUserprofile,messages});
                 });
             });
         });

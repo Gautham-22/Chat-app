@@ -8,6 +8,23 @@ html, body {
     position: relative;
     width: 100vw;
     height: 100vh;
+    font-size: 16px; 
+}
+
+#logout {
+    width: 4.5rem;
+    height: 2rem;
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    border: none;
+    color: white;
+    background: #139c8c;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-decoration: none;
+    font-size: 0.8rem;
 }
 
 main {
@@ -26,62 +43,132 @@ main {
     border: 0.5px solid rgb(235, 235, 235);
 }
 
-.account-tab {
-    width: 20%;
-    height: 100%;
-}
-
-.user-tab {
-    width: 20%;
-    height: 100%;
-    background: rgb(247, 247, 247);
-}
-
-.account {
-    width: 100%;
-    height: 13%;
-}
-
-.result {
-    width: 100%;
-}
-
-.user {
-    width: 100%;
-    height: 50px;
-}
-
-.my-profile, .profile{
-    width: 20%;
-    height: 50%;
-    border-radius: 50%;
-    margin: 10px;
-}
-
-.heading {
-    width: 90%;
-    height: 7%;
-    margin: auto;
-    margin-top: 5px;
-    padding: 5px;
-    border-top: 0.5px solid rgb(153, 153, 153);
-    border-bottom: 0.5px solid rgb(153, 153, 153);
-    font-family: 'Open Sans', sans-serif;
-    font-size: 16px;
-    color: rgb(87, 84, 84);
-    letter-spacing: 0.5px;
-}
-
 .text-input {
     width: 100%;
     height: 9%;
 }
 
+.account-tab {
+    width: 40%;
+    height: 100%;
+    background: rgb(247, 247, 247);
+}
+
+.chat-history {
+    width: 60%;
+    height: 100%;
+    letter-spacing: 0.75px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.account {
+    width: 100%;
+    height: 13%;
+    border-bottom: 0.05rem solid rgb(185, 185, 185);
+}
+
+.search-users {
+    width: 100%;
+    height: 12%;
+    margin: auto;
+    background-color: #139c8c;
+    padding: 0.6rem;
+}
+
+.result {
+    width: 100%;
+    height: 13%;
+    overflow: auto;
+    scrollbar-width: none;
+}
+
+.result::-webkit-scrollbar {
+    display: none;
+}
+
+.result-placeholder {
+    color: rgba(0, 0, 0, 0.493);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-tab {
+    width: 100%;
+    height: 59.5%;
+    overflow: hidden;
+}
+
+.account, .user ,.chatting-user{
+    display: flex;
+    align-items: center;
+    height: 4rem;
+}
+
+.account {
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    border: 0.5px solid rgb(173, 173, 173);
+    vertical-align: middle;
+    margin: 0 0.5rem;
+}
+
+#current-user {
+    font-style: italic;
+}
+
+.user {
+    width: 90%;
+    margin: auto;
+}
+
+.user:hover {
+    cursor: pointer;
+    background: rgb(201, 201, 201,0.5);
+}
+
+.my-account {
+    float: right;
+    color: rgb(0, 0, 0,0.5);
+}
+
+.heading {
+    width: 90%;
+    height: 8%;
+    margin: auto;
+    margin-top: 0.31rem;
+    padding: 0.31rem;
+    border-bottom: 0.5px solid rgb(153, 153, 153);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    color: rgb(87, 84, 84);
+    letter-spacing: 0.5px;
+}
+
+.chatted-users {
+    height: 92%;
+    width: 100%;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.chatted-users::-webkit-scrollbar {
+    display: none;
+}
+
 .new-message {
     width: 88%;
     height: 100%;
-    padding: 9px;
-    font-size: 15px;
+    padding: 0.56rem;
+    font-size: 0.9rem;
     border: none;
     outline: none;
     border-bottom: 0.5px solid #139c8c;
@@ -91,7 +178,6 @@ main {
     width: 11%;
     height: 100%;
     color: white;
-    font-size: 16px;
     background: #139c8c;
     border: none;
     float: right;
@@ -103,22 +189,36 @@ main {
     transition: 0.3s ease-in;
 }
 
-.chat-history {
-    width: 60%;
-    height: 100%;
-    padding: 10px;
-    letter-spacing: 0.75px;
-    font-family: 'Poppins', sans-serif;
+.chatting-user {
+    width: 100%;
+    height: 13%;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    background: rgb(235, 235, 235);
+    display: flex;
+    align-items: center;
+    padding-left: 1.5rem;
+}
+
+.messages {
+    width: 100%;
+    height: 87%;
+    padding : 0.6rem;
+    overflow: auto;
+    word-wrap: break-word;
+    scrollbar-width: none;
+}
+
+.messages::-webkit-scrollbar {
+    display: none;
 }
 
 .sent-message, .received-message {
-    overflow: auto;
-    width: 275px;
-    min-height: 27px;
-    padding: 6px;
-    margin-top: 15px;
-    font-size: 13px;
-    word-wrap: break-word;
+    width: 60%;
+    min-height: 1.6rem;
+    padding: 0.3rem;
+    margin-top: 0.93rem;
+    font-size: 0.81rem;
     position: relative;
 }
 
@@ -133,62 +233,109 @@ main {
     float: left;
 }
 
-.sent-message::after, .received-message::after{
+.sent-message::after, .received-message::after, .my-account::after{
     content: "";
     clear: both;
     display: table;
 }
 
+.msg {
+    width: 87%;
+}
+
 .time {
     position: absolute;
-    bottom: 5px;
-    right: 5px;
-    font-size: smaller;
+    bottom: 0.15rem;
+    right: 0.15rem;
+    font-size: 0.6rem;
     opacity: 0.8;
-}
-
-#logout {
-    width: 6.5%;
-    height: 5.5%;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    border: none;
-    color: white;
-    font-size: 16px;
-    background: #139c8c;
-}
-
-.search-users {
-    background-color: #272c33;
-    border-radius: 40px;
-    height: 60px;
-    padding: 10px;
 }
 
 .search-user {
     background: none;
     outline: none;
     border: none;
-    color: white;
+    color: rgb(248, 248, 248);
     float: left;
-    font-size: 16px;
+    font-size: 0.9rem;
     font-weight: 500;
-    line-height: 40px;
-    width: 250px;
-    padding: 0px 7px;
+    line-height: 2rem;
+    width: 80%;
+    padding: 0rem 0.43rem;
+}
+
+.search-user::placeholder {
+    color: rgb(248, 248, 248,0.7);
 }
 
 .search-btn {
-    color: #139c8c;
-    background-color: white;
+    color: rgb(160, 160, 160);
+    background: rgb(247, 247, 247);
     float: right;
-    width: 40px;
-    height: 40px;
+    width: 12%;
+    height: 100%;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: 0.4s;
+}
+
+.search-btn:hover {
+    color: #128f80;
+}
+
+@media only screen and (max-width: 800px) {
+    * {
+        transition: 0.4s ease;
+    }
+    html, body {
+        font-size: 14px; 
+    }
+    main {
+        width: 90%;
+        height: 85%;
+    }
+    .content {
+        height: 93%;
+    }
+    .text-input {
+        height: 7%;
+    }
+    #logout {
+        top: 1.5%;
+        left: 1.5%;
+    }
+    .search-users {
+        height: 9%;
+    }
+    .sent-message, .received-message {
+        width: 65%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    main {
+        width: 100%;
+        height: 90%;
+    }
+    html, body {
+        font-size: 12px; 
+    }
+    .content {
+        height: 95%;
+    }
+    .text-input {
+        height: 5%;
+    }
+    #logout {
+        top: 0.5%;
+        left: 1%;
+    }
+    .search-users {
+        height: 6%;
+    }
+    .sent-message, .received-message {
+        width: 70%;
+    }
 }

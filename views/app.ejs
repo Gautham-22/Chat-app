@@ -15,36 +15,48 @@
         <link rel="stylesheet" href="/app/styles.css">
     </head>
     <body>
-        <a href="/logout"><button id="logout"><i class="fas fa-arrow-circle-left"> </i>  Logout</button></a>
+        <a href="/logout" id="logout">
+            <i class="fas fa-arrow-circle-left"> </i>  
+            <div class="text">Logout</div>
+        </a>
         <main>
             <div class="content">
                 <div class="account-tab">
                     <div class="account">
                         <img src="data:image/<%= image.contentType %>;base64,
                         <%= image.data.toString('base64') %>" class="my-profile">
-                        <p id="current-user"><%= username %></p>
+                        <span id="current-user"><%= username %></span>
+                        <div class="my-account">My account</div>
                     </div>
                     <div class="search-users">
-                        <input type="text" placeholder=" name" class="search-user" spellcheck="false" autocomplete="off">
+                        <input type="text" placeholder="username" class="search-user" spellcheck="false" autocomplete="off">
                         <a href="#" class="search-btn">
                             <i class="fas fa-search"></i>
                         </a> 
                     </div>
-                    <div class="result"></div>
-                </div>
-                <div class="user-tab">
-                    <h3 class="heading">
-                        Chatted Users
-                    </h3>
-                    <div class="chatted-users">
-                        <% for(let i=0;i<chattedUsernames.length;i++){ %>
-                            <div class="user"><p id="chat-username"><%= chattedUsernames[i] %></p></div>
-                        <% } %>
+                    <div class="result">
+                        <div class="result-placeholder">
+                            <span>Search results will appear here</span>
+                        </div>
+                    </div>
+                    <div class="user-tab">
+                        <h3 class="heading">
+                            Chatted Users
+                        </h3>
+                        <div class="chatted-users">
+                            <% for(let i=0;i<chattedUsernames.length;i++){ %>
+                                <div class="user">
+                                    <img src="data:image/<%= chattedUserprofiles[i].contentType %>;base64,
+                                    <%= chattedUserprofiles[i].data.toString('base64') %>" class="profile">
+                                    <span id="chat-username"><%= chattedUsernames[i] %></span>
+                                </div>
+                            <% } %>
+                        </div>
                     </div>
                 </div>
                 <div class="chat-history">
                     <div class="chatting-user">
-                        
+
                     </div>
                     <div class="messages">
 
